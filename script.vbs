@@ -5,10 +5,10 @@ Function style_Init()
 
   With style.info
     .format = "display"
-    .name = "Cobalt Scripted"
-    .description = "A clean, sleek-looking style (powered by VBScript)"
+    .name = "Cobalt Scripted 128px icon"
+    .description = "A clean, sleek-looking style with 128px icons that look good on widescreen monitors (powered by VBScript)"
     .version = 0
-    .revision = 2
+    .revision = 1
     .icon = style.path & "icon.png"
     .schemes = "Light;Dark"
 
@@ -24,37 +24,37 @@ Dim prTitle
 Dim prText
 Dim lc
 
-Const TITLE_TEXT_GAP = 2
+Const TITLE_TEXT_GAP = 0
 Const MARGIN_SIZE = 20
-Const POPUP_WIDTH = 350
+Const POPUP_WIDTH = 550
 
   Set prTitle = new_BRect(0,0,0,0)
   Set prText = new_BRect(0,0,0,0)
 
   With view 
-    .SizeTo 350, 78
+    .SizeTo POPUP_WIDTH, 128 + (MARGIN_SIZE * 2)
     Set pbIcon = load_image_obj(style.notification.ValueOf("icon"))
     xEdge = MARGIN_SIZE
     If is_valid_image((pbIcon)) Then _
-      xEdge = xEdge + 32 + 10
+      xEdge = xEdge + 128 + MARGIN_SIZE
 
     If style.notification.ValueOf("title") <> "" Then
-      .SetFont "Arial", 9, True   
+      .SetFont "Segoe UI Light", 16  
       .MeasureString style.notification.ValueOf("title"), new_BRect(xEdge, 0, .Width - MARGIN_SIZE, 16384), (prTitle)
 
     End If
 
     If style.notification.ValueOf("text") <> "" Then
-      .SetFont "Arial", 9
-      .MeasureString style.notification.ValueOf("text"), new_BRect(xEdge, 0, .Width - MARGIN_SIZE, 16384), (prText)
+      .SetFont "Segoe UI Light", 16
+      .MeasureString style.notification.ValueOf("text"), new_BRect(xEdge, 0, .Width, 16384), (prText)
 
     End If
 
     ' /* final size */
 
     .SizeTo POPUP_WIDTH, _
-            MAX(MARGIN_SIZE + MARGIN_SIZE + TITLE_TEXT_GAP + 32, _
-		MARGIN_SIZE + prTitle.Height + TITLE_TEXT_GAP + prText.Height + MARGIN_SIZE)
+            MAX(MARGIN_SIZE + MARGIN_SIZE + TITLE_TEXT_GAP + 128, _
+		MARGIN_SIZE + prTitle.Height + TITLE_TEXT_GAP + prText.Height + (MARGIN_SIZE * 2) + 20)
 
     ' /* background */
 
@@ -85,7 +85,7 @@ Const POPUP_WIDTH = 350
 
     ' /* title */
 
-    .SetFont "Arial", 9, True            
+    .SetFont "Segoe UI Light", 16            
     Select Case style.notification.ValueOf("scheme")
     Case "light"
       .SetHighColour rgba(0, 0, 0)
@@ -101,7 +101,7 @@ Const POPUP_WIDTH = 350
 
     ' /* text */
 
-    .SetFont "Arial", 9
+    .SetFont "Segoe UI Light", 16 
     Select Case style.notification.ValueOf("scheme")
     Case "light"
       .SetHighColour rgba(0, 0, 0, 198)
@@ -126,7 +126,7 @@ Const POPUP_WIDTH = 350
 
 
     ' /* icon */
-    .DrawScaledImage (pbIcon), new_BPoint(MARGIN_SIZE, MARGIN_SIZE), new_BPoint(32, 32)
+    .DrawScaledImage (pbIcon), new_BPoint(MARGIN_SIZE, MARGIN_SIZE), new_BPoint(128, 128)
 
 
     ' /* priority */
